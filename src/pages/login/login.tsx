@@ -1,12 +1,13 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch } from '../../services/store';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { login } from '../../services/slices/userSlice';
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +20,8 @@ export const Login: FC = () => {
     dispatch(login({ email, password }))
       .unwrap()
       .then(() => {
-        navigate('/');
+        const from = location.state?.from?.pathname || '/';
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         setError(err.message || 'Error login');
@@ -28,7 +30,7 @@ export const Login: FC = () => {
 
   return (
     <LoginUI
-      errorText=''
+      errorText={error}
       email={email}
       setEmail={setEmail}
       password={password}

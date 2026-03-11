@@ -35,3 +35,7 @@ export const selectFeeds = (state: RootState) => state.feeds.orders;
 export const selectFeedsLoading = (state: RootState) => state.feeds.loading;
 export const selectTotal = (state: RootState) => state.feeds.total;
 export const selectTotalToday = (state: RootState) => state.feeds.totalToday;
+
+export const selectOrderByNumber = (state: RootState) => state.order.order;
+export const selectOrderByNumberLoading = (state: RootState) =>
+  state.order.loading;

@@ -14,16 +14,17 @@ import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Preloader } from '@ui';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import { useDispatch, useSelector } from '../../services/store';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { checkUserAuth } from '../../services/slices/userSlice';
 import { fetchIngredients } from '../../services/slices/ingredientsSlice';
 
 const App = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const background = location.state?.background;
 
@@ -37,6 +38,10 @@ const App = () => {
     dispatch(fetchIngredients());
     dispatch(checkUserAuth());
   }, []);
+
+  const handleModalClose = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
 
   if (isIngredientsLoading && ingredients.length === 0) {
     return (
@@ -131,10 +136,7 @@ const App = () => {
             <Route
               path='/ingredients/:id'
               element={
-                <Modal
-                  title='Детали ингредиента'
-                  onClose={() => window.history.back()}
-                >
+                <Modal title='Детали ингредиента' onClose={handleModalClose}>
                   <IngredientDetails />
                 </Modal>
               }
@@ -142,10 +144,7 @@ const App = () => {
             <Route
               path='/feed/:number'
               element={
-                <Modal
-                  title='Детали заказа'
-                  onClose={() => window.history.back()}
-                >
+                <Modal title='Детали заказа' onClose={handleModalClose}>
                   <OrderInfo />
                 </Modal>
               }
@@ -154,10 +153,7 @@ const App = () => {
               path='/profile/orders/:number'
               element={
                 <ProtectedRoute>
-                  <Modal
-                    title='Детали заказа'
-                    onClose={() => window.history.back()}
-                  >
+                  <Modal title='Детали заказа' onClose={handleModalClose}>
                     <OrderInfo />
                   </Modal>
                 </ProtectedRoute>

@@ -36,14 +36,21 @@ export const BurgerConstructor: FC = () => {
 
     const ingredientsIds = [
       constructorItems.bun._id,
-      ...constructorItems.ingredients.map((item) => item._id)
+      ...constructorItems.ingredients.map((item) => item._id),
+      constructorItems.bun._id
     ];
-    dispatch(placeOrder(ingredientsIds));
+    dispatch(placeOrder(ingredientsIds))
+      .unwrap()
+      .then(() => {
+        dispatch(clearConstructor());
+      })
+      .catch((err) => {
+        console.error('Error order', err);
+      });
   }, [constructorItems, user, orderRequest, dispatch, navigate]);
 
   const closeOrderModal = useCallback(() => {
     dispatch(clearOrderModal());
-    dispatch(clearConstructor());
   }, [dispatch]);
 
   return (
