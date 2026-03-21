@@ -15,6 +15,7 @@ export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
           styles.link
         } ${isActive ? styles.link_active : ''}`
       }
+      data-cy='profile-link'
       end
     >
       Профиль
@@ -26,12 +27,14 @@ export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
           styles.link
         } ${isActive ? styles.link_active : ''}`
       }
+      data-cy='profile-orders-link'
     >
       История заказов
     </NavLink>
     <button
       className={`text text_type_main-medium text_color_inactive pt-4 pb-4 ${styles.button}`}
       onClick={handleLogout}
+      data-cy='logout-button'
     >
       Выход
     </button>
