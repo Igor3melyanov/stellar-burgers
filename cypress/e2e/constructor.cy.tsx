@@ -23,6 +23,11 @@ describe('Конструктор бургера', () => {
     cy.get('[data-cy="ingredient-bun"]').should('exist');
   });
 
+  afterEach(() => {
+    cy.clearLocalStorage();
+    cy.clearCookies();
+  });
+
   describe('Добавление ингредиентов в конструктор', () => {
     it('Должен добавить булки в конструктор', () => {
       cy.get('[data-cy="ingredient-bun"]').first().within(() => {
