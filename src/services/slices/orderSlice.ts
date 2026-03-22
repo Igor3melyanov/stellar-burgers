@@ -8,7 +8,7 @@ interface IOrderState {
   error: string | null;
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   order: null,
   loading: false,
   error: null
@@ -38,7 +38,7 @@ const orderSlice = createSlice({
       })
       .addCase(getOrderByNumber.fulfilled, (state, action) => {
         state.order = action.payload;
-        state.loading = true;
+        state.loading = false;
       })
       .addCase(getOrderByNumber.rejected, (state, action) => {
         state.loading = false;

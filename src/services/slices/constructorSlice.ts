@@ -10,7 +10,7 @@ interface IConstructorState {
   orderError: string | null;
 }
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
   bun: null,
   ingredients: [],
   orderRequest: false,
